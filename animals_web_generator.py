@@ -1,29 +1,26 @@
 import json
 
-def load_data(file_path):
-    """Lädt eine JSON-Datei"""
-    with open(file_path, "r", encoding="utf-8") as handle:
-        return json.load(handle)
+# 1. JSON-Datei lesen
+with open("animals.json") as file:
+    data = json.load(file)
 
-# Daten laden
-animals_data = load_data("animals_data.json")
+# 2. Tierdaten als String generieren
+output = ''
+for animal in data:
+    output += f"Name: {animal['name']}<br>\n"
+    output += f"Diet: {animal['characteristics']['diet']}<br>\n"
+    output += f"Location: {animal['geography']['continents'][0]}<br>\n"
+    output += f"Type: {animal['taxonomy']['class']}<br><br>\n"
 
-for animal in animals_data:
-    if "name" in animal:
-        print(f"Name: {animal['name']}")
+# 3. HTML-Template lesen
+with open("animals_template.html") as template_file:
+    template = template_file.read()
 
-    # "diet" kann entweder auf oberster Ebene oder unter "characteristics" liegen
-    diet = animal.get("diet") or animal.get("characteristics", {}).get("diet")
-    if diet:
-        print(f"Diet: {diet}")
+# 4. Platzhalter ersetzen
+final_html = template.replace("__REPLACE_ANIMALS_INFO__", output)
 
-    # Erster Eintrag aus "locations", falls vorhanden
-    if "locations" in animal and animal["locations"]:
-        print(f"Location: {animal['locations'][0]}")
+# 5. Neue HTML-Datei schreiben
+with open("animals.html", "w") as output_file:
+    output_file.write(final_html)
 
-    # "type" kann auch unter "characteristics" liegen
-    type_ = animal.get("type") or animal.get("characteristics", {}).get("type")
-    if type_:
-        print(f"Type: {type_}")
-
-    print()  # Leerzeile zwischen Tieren
+print("animals.html wurde erstellt!")
