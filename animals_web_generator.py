@@ -7,10 +7,10 @@ with open("animals.json") as file:
 # 2. Tierdaten als String generieren
 output = ''
 for animal in data:
-    output += f"Name: {animal['name']}<br>\n"
-    output += f"Diet: {animal['characteristics']['diet']}<br>\n"
-    output += f"Location: {animal['geography']['continents'][0]}<br>\n"
-    output += f"Type: {animal['taxonomy']['class']}<br><br>\n"
+    output += '<li class="cards__item">'
+    output += '<li class="cards__item">'
+    output += '<li class="cards__item">'
+    output += '<li class="cards__item">'
 
 # 3. HTML-Template lesen
 with open("animals_template.html") as template_file:
